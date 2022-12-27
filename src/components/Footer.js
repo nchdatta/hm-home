@@ -11,8 +11,8 @@ const Footer = () => {
             <hr className="mb-6 h-px bg-gray-200 border-0" />
             <NavbarBrand />
             <div className="flex flex-col lg:flex-row gap-5 lg:gap-0 my-8">
-                <p className='lg:w-1/3 p-0 lg:pr-40 text-base'>Lorem ipsum is dolor sit amet, csectetur adipiscing elit, dolore smod tempor incididunt ut labore et.</p>
-                <div className="lg:w-2/3 grid grid-cols-2 lg:grid-cols-3 gap-5">
+                <p className='w-full lg:w-1/3 p-0 lg:pr-40 text-base'>Lorem ipsum is dolor sit amet, csectetur adipiscing elit, dolore smod tempor incididunt ut labore et.</p>
+                <div className="w-full lg:w-2/3 grid grid-cols-2 lg:grid-cols-3 gap-5">
                     <ul>
                         {dropdownItems.map(nav => <ListItem key={nav.id} menu={nav.menu} />)}
                     </ul>
@@ -25,15 +25,15 @@ const Footer = () => {
                 </div>
             </div>
             <h2 className='mb-4 text-lg font-medium'>Contact Us</h2>
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-5 lg:items-center">
+            <div className="flex flex-col lg:flex-row justify-between gap-5 lg:items-center">
                 <div className='text-base'>
                     <p className='mb-2'><i className="fa-solid fa-location-dot text-[#2CAEE2] mr-2"></i> House-20, Road-27, Block-A, Banani, Dhaka.</p>
                     <p className='mb-2'><i className="fa-solid fa-phone text-[#2CAEE2] mr-2"></i> +8801234567890, +88058269458</p>
                     <p className='mb-2'><i className="fa-solid fa-envelope text-[#2CAEE2] mr-2"></i> tmbd@mail.com</p>
-                    <p><i className="fa-solid fa-globe text-[#2CAEE2] mr-2"></i>tmbd.com</p>
+                    <p><i className="fa-solid fa-globe text-[#2CAEE2] mr-2"></i> tmbd.com</p>
                 </div>
                 <div>
-                    <p className='text-lg font-medium mb-5'>Social Links</p>
+                    <p className='text-lg font-medium mb-5 pr-0 lg:pr-56'>Social Links</p>
                     <div className="flex gap-3">
                         <svg width="9" height="15" viewBox="0 0 9 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M7.63272 8.4375L8.02155 5.72285H5.59042V3.96123C5.59042 3.21855 5.93003 2.49463 7.01885 2.49463H8.12409V0.183398C8.12409 0.183398 7.12112 0 6.16217 0C4.16007 0 2.85139 1.3002 2.85139 3.65391V5.72285H0.625885V8.4375H2.85139V15H5.59042V8.4375H7.63272Z" fill="#2CAEE2" />

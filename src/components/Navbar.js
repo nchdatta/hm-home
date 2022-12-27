@@ -20,7 +20,7 @@ const Navbar = () => {
 
     return (
         <nav>
-            <div className="px-4 lg:px-28  flex flex-wrap items-center justify-between py-[18px]">
+            <div className="px-4 lg:px-28 w-full flex flex-wrap items-center justify-between py-[18px]">
                 <NavbarBrand />
                 <button onClick={() => setIsNavExpanded(!isNavExpanded)} className='lg:hidden justify-end p-2 hover:bg-gray-50 rounded-md'>
                     <i className="fa-solid fa-bars fa-xl"></i>

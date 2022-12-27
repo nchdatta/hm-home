@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import Footer from "./components/Footer";
 import Loading from "./components/Loading";
 import Navbar from "./components/Navbar";
+import RequireAuth from "./components/RequireAuth";
 import NotFound from "./pages/ErrorPages/NotFound";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
@@ -15,7 +16,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/users" element={<Suspense fallback={<Loading />}><Users /></Suspense>} />
+        <Route path="/users" element={<RequireAuth><Suspense fallback={<Loading />}><Users /></Suspense></RequireAuth>} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Suspense fallback={<Loading />}><SignUp /></Suspense>} />
         <Route path="*" element={<NotFound />} />

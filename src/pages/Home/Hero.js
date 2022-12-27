@@ -8,14 +8,14 @@ import SliderComp from '../../components/SliderComp';
 
 const Hero = () => {
     return (
-        <div className='hero min-h-screen relative'>
+        <div className='relative'>
             <div className='hero-bg-left'></div>
             <div className='hero-bg-right'></div>
 
             <div className='px-4 lg:px-28'>
                 <Swiper
                     autoplay={{
-                        delay: 1000000
+                        delay: 2500
                     }}
                     pagination={{
                         dynamicBullets: true,
@@ -23,18 +23,12 @@ const Hero = () => {
                     modules={[Autoplay, Pagination]}
                     className="mySwiper">
 
-                    <SwiperSlide>
-                        <SliderComp />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <SliderComp />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <SliderComp />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <SliderComp />
-                    </SwiperSlide>
+                    {
+                        [1, 2, 3, 4].map((item) =>
+                            <SwiperSlide key={item}>
+                                <SliderComp />
+                            </SwiperSlide>)
+                    }
 
                 </Swiper>
             </div>
