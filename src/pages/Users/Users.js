@@ -4,7 +4,7 @@ const Users = () => {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:5000/user')
+        fetch('https://hm-home.onrender.com/user')
             .then(res => res.json())
             .then(data => setUsers(data));
     }, []);
