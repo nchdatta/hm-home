@@ -14,7 +14,7 @@ const Hero = () => {
     return (
         <div className='hero min-h-screen'>
 
-            <div className='pl-16 pr-20'>
+            <div className='px-4 lg:px-28'>
                 <Swiper
                     autoplay
                     pagination={{

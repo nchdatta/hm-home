@@ -10,7 +10,7 @@ const Users = React.lazy(() => import("./pages/Users/Users"));
 
 function App() {
   return (
-    <div className="container">
+    <div>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />

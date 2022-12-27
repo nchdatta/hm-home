@@ -21,8 +21,8 @@ const Login = () => {
 
 
     return (
-        <div className='min-h-screen lg:w-[85%] mx-auto my-10'>
-            <div className='lg:w-1/3 mx-auto border rounded-md shadow-md px-5 py-8 '>
+        <div className='min-h-screen my-10'>
+            <div className='w-2/3 lg:w-1/3 mx-auto border rounded-md shadow-md px-5 py-8 '>
                 <h2 className='text-md font-bold text-center mb-8'>Login to account</h2>
 
                 <form className='flex flex-col items-center justify-center' onSubmit={handleSubmit(onSubmit)}>

@@ -11,7 +11,7 @@ const Users = () => {
 
 
     return (
-        <div className="overflow-x-auto w-full lg:w-[85%] mx-auto min-h-screen mt-10">
+        <div className="px-4 lg:px-28 overflow-x-auto min-h-screen mt-10">
             <h2 className='text-xl text-[#2CAEE2] mb-5'>Users List</h2>
             <table className="w-full text-sm">
                 <thead className="bg-gray-100">

@@ -20,7 +20,7 @@ const Navbar = () => {
 
     return (
         <nav>
-            <div class="w-full lg:w-[85%] mx-auto flex flex-wrap items-center justify-between px-2 lg:px-0 py-[18px]">
+            <div class="px-4 lg:px-28  flex flex-wrap items-center justify-between py-[18px]">
                 <NavbarBrand />
                 <button onClick={() => setIsNavExpanded(!isNavExpanded)} className='lg:hidden justify-end p-2 hover:bg-gray-50 rounded-md'>
                     <i class="fa-solid fa-bars fa-xl"></i>
@@ -33,8 +33,8 @@ const Navbar = () => {
                         {navItems.map(item => <NavItem key={item.id} menu={item.menu} to={item.to} />)}
                         {user && <NavItem menu="Users" to="/users" />}
 
-                        <ul className="flex items-center gap-7 lg:pl-20">
-                            <li>{lang} En {arrowDown}</li>
+                        <ul className="flex items-center gap-7 text-sm lg:pl-20">
+                            <li className='cursor-pointer'>{lang} En {arrowDown}</li>
                             {
                                 user
                                     ? <button onClick={async () => await signOut()}>Sign out</button>
