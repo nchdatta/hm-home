@@ -1,6 +1,7 @@
 import React, { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import Footer from "./components/Footer";
+import Loading from "./components/Loading";
 import Navbar from "./components/Navbar";
 import NotFound from "./pages/ErrorPages/NotFound";
 import Home from "./pages/Home/Home";
@@ -14,9 +15,9 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/users" element={<Suspense fallback={<div>Loading...</div>}><Users /></Suspense>} />
+        <Route path="/users" element={<Suspense fallback={<Loading />}><Users /></Suspense>} />
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Suspense fallback={<div>Loading...</div>}><SignUp /></Suspense>} />
+        <Route path="/signup" element={<Suspense fallback={<Loading />}><SignUp /></Suspense>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />

@@ -8,11 +8,14 @@ import SliderComp from '../../components/SliderComp';
 
 const Hero = () => {
     return (
-        <div className='hero min-h-screen'>
+        <div className='hero min-h-screen relative'>
+            <div className='hero-bg-left'></div>
+            <div className='hero-bg-right'></div>
+
             <div className='px-4 lg:px-28'>
                 <Swiper
                     autoplay={{
-                        delay: 2500
+                        delay: 1000000
                     }}
                     pagination={{
                         dynamicBullets: true,

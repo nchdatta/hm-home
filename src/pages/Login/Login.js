@@ -7,7 +7,7 @@ import auth from '../../utils/firebase.init';
 const Login = () => {
     const navigate = useNavigate();
     const { register, handleSubmit } = useForm();
-    const [signInWithEmailAndPassword, user] = useSignInWithEmailAndPassword(auth);
+    const [signInWithEmailAndPassword, signing, user] = useSignInWithEmailAndPassword(auth);
 
 
     const onSubmit = async data => {
@@ -21,8 +21,8 @@ const Login = () => {
 
 
     return (
-        <div className='min-h-screen my-10'>
-            <div className='w-2/3 lg:w-1/3 mx-auto border rounded-md shadow-md px-5 py-8 '>
+        <div className='w-full lg:w-1/3 mx-auto min-h-screen my-10 px-8'>
+            <div className='border rounded-md shadow-md px-5 py-8 '>
                 <h2 className='text-md font-bold text-center mb-8'>Login to account</h2>
 
                 <form className='flex flex-col items-center justify-center' onSubmit={handleSubmit(onSubmit)}>
@@ -35,7 +35,7 @@ const Login = () => {
                         <input type="password" id="password" {...register("password")} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:border-[#2CAEE2] block w-full p-2.5" placeholder="•••••••••" required />
                     </div>
 
-                    <input type='submit' value='Login' className='text-white bg-[#2CAEE2] hover:bg-[#23a7db] px-10 py-2 rounded text-center cursor-pointer' />
+                    <input type='submit' value='Login' className='text-white bg-[#2CAEE2] hover:bg-[#23a7db] px-10 py-2 rounded text-center cursor-pointer' disabled={signing} />
                 </form>
                 <p className='text-center text-sm mt-4'>Don't have an account? <Link to='/signup' className='text-[#2CAEE2]'>Signup now</Link> </p>
             </div>

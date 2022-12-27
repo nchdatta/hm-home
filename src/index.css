@@ -29,8 +29,54 @@ footer {
   background-position: right bottom;
 }
 
-.hero {
+/* .hero {
   background: url(./assets/images/hero-bg-left.png), url(./assets/images/hero-bg-right.png);
   background-repeat: no-repeat, no-repeat;
   background-position: left top, right top;
+} */
+
+.hero-bg-left {
+  width: 172px;
+  height: 100%;
+  background-image: url(./assets/images/hero-bg-left.png);
+  background-size: 30%;
+  background-repeat: no-repeat;
+  background-position: left top;
+  position: fixed;
+  left: 0;
+}
+
+.hero-bg-right {
+  width: 727px;
+  height: 100%;
+  background-image: url(./assets/images/hero-bg-right.png);
+  background-size: 35%;
+  background-repeat: no-repeat;
+  background-position: right top;
+  position: fixed;
+  right: 0;
+}
+
+@media screen and (min-width: 1024px) {
+  .hero-bg-left {
+    width: 172px;
+    height: 100%;
+    background-image: url(./assets/images/hero-bg-left.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: left top;
+    position: absolute;
+    left: 0;
+  }
+
+  .hero-bg-right {
+    width: 727px;
+    height: 100%;
+    background-image: url(./assets/images/hero-bg-right.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: right top;
+    position: absolute;
+    right: 0;
+  }
 }
