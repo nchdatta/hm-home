@@ -6,7 +6,7 @@ import Navbar from "./components/Navbar";
 import RequireAuth from "./components/RequireAuth";
 import NotFound from "./pages/ErrorPages/NotFound";
 import Home from "./pages/Home/Home";
-import Login from "./pages/Login/Login";
+const Login = React.lazy(() => import("./pages/Login/Login"));
 const SignUp = React.lazy(() => import("./pages/SignUp/SignUp"));
 const Users = React.lazy(() => import("./pages/Users/Users"));
 
@@ -17,7 +17,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/users" element={<RequireAuth><Suspense fallback={<Loading />}><Users /></Suspense></RequireAuth>} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Suspense fallback={<Loading />}><Login /></Suspense>} />
         <Route path="/signup" element={<Suspense fallback={<Loading />}><SignUp /></Suspense>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
