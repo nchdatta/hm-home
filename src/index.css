@@ -28,3 +28,9 @@ footer {
   background-repeat: no-repeat;
   background-position: right bottom;
 }
+
+.hero {
+  background: url(./assets/images/hero-bg-left.png), url(./assets/images/hero-bg-right.png);
+  background-repeat: no-repeat, no-repeat;
+  background-position: left top, right top;
+}
