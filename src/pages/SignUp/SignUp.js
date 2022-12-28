@@ -9,7 +9,7 @@ import PasswordField from '../../components/PasswordField';
 import SubmitButton from '../../components/SubmitButton';
 
 const SignUp = () => {
-    const { register, handleSubmit, reset } = useForm();
+    const { register, handleSubmit } = useForm();
     const [createUserWithEmailAndPassword, user, creating, cError] = useCreateUserWithEmailAndPassword(auth);
     const [updateProfile] = useUpdateProfile(auth);
     const navigate = useNavigate();
@@ -27,18 +27,13 @@ const SignUp = () => {
                 'content-type': 'application/json'
             },
             body: JSON.stringify({ name, email })
-        }).then(res => res.json())
-            .then(data => console.log(data));
-
-        reset();
+        }).then(res => res.json());
     }
 
     if (user) {
         navigate('/', { replace: true });
     }
-    if (cError) {
-        alert("There was an error while creating account.");
-    }
+
 
     return (
         <div className='w-full lg:w-1/3 mx-auto min-h-screen my-10 px-8'>
@@ -47,7 +42,8 @@ const SignUp = () => {
 
                 <form className='flex flex-col items-center justify-center' onSubmit={handleSubmit(onSubmit)}>
                     <TextField label='Full Name' id='name' placeholder='John Milton' register={register} />
-                    <EmailField register={register} />
+                    <EmailField register={register} cError={cError} />
+
                     <PasswordField register={register} label='Password' />
                     <SubmitButton value='Signup' loading={creating} />
                 </form>

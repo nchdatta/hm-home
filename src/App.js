@@ -10,6 +10,7 @@ const Dashboard = React.lazy(() => import("./pages/Dashboard/Dashboard"));
 const Login = React.lazy(() => import("./pages/Login/Login"));
 const SignUp = React.lazy(() => import("./pages/SignUp/SignUp"));
 const Users = React.lazy(() => import("./pages/Users/Users"));
+const EditUserProfile = React.lazy(() => import("./pages/Users/EditUserProfile"));
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/users" element={<RequireAuth><Suspense fallback={<Loading />}><Users /></Suspense></RequireAuth>} />
+        <Route path="/users/edit-user/:email" element={<RequireAuth><Suspense fallback={<Loading />}><EditUserProfile /></Suspense></RequireAuth>} />
         <Route path="/login" element={<Suspense fallback={<Loading />}><Login /></Suspense>} />
         <Route path="/signup" element={<Suspense fallback={<Loading />}><SignUp /></Suspense>} />
         <Route path="/profile/*" element={<Suspense fallback={<Loading />}><Dashboard /></Suspense>} />
