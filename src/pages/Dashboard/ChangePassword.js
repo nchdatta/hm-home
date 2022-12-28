@@ -25,7 +25,7 @@ const ChangePassword = () => {
 
     return (
         <div>
-            <h2 className='text-md font-medium text-blue-500 mb-3'>Profile</h2>
+            <h2 className='text-md font-medium text-blue-500 mb-3'>Change Password</h2>
             <form onSubmit={handleSubmit(onSubmit)} className='w-full lg:w-1/3'>
                 <PasswordField register={register} label='Old Password' />
                 <NewPasswordField register={register} label='New Password' />

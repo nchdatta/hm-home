@@ -1,13 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useQuery } from 'react-query';
 
 const Users = () => {
-    const [users, setUsers] = useState([]);
-
-    useEffect(() => {
-        fetch('https://hm-home.onrender.com/user')
-            .then(res => res.json())
-            .then(data => setUsers(data));
-    }, []);
+    const { data: users } = useQuery('users', () => fetch('https://hm-home.onrender.com/user')
+        .then(res => res.json()));
 
 
     return (

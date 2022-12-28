@@ -3,9 +3,10 @@ import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import auth from '../../utils/firebase.init';
-import NameField from '../../components/NameField';
+import TextField from '../../components/TextField';
 import EmailField from '../../components/EmailField';
 import PasswordField from '../../components/PasswordField';
+import SubmitButton from '../../components/SubmitButton';
 
 const SignUp = () => {
     const { register, handleSubmit, reset } = useForm();
@@ -45,10 +46,10 @@ const SignUp = () => {
                 <h2 className='text-md font-bold text-center mb-8'>Signup</h2>
 
                 <form className='flex flex-col items-center justify-center' onSubmit={handleSubmit(onSubmit)}>
-                    <NameField register={register} />
+                    <TextField label='Full Name' id='name' placeholder='John Milton' register={register} />
                     <EmailField register={register} />
                     <PasswordField register={register} label='Password' />
-                    <input type='submit' value='Signup' className='text-white bg-[#2CAEE2] hover:bg-[#23a7db] px-10 py-2 rounded text-center cursor-pointer' disabled={creating} />
+                    <SubmitButton value='Signup' loading={creating} />
                 </form>
                 <p className='text-center text-sm mt-4'>Already have an account? <Link to='/login' className='text-[#2CAEE2]'>Login now</Link> </p>
             </div>
