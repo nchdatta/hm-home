@@ -22,7 +22,7 @@ function App() {
         <Route path="/users/edit-user/:email" element={<RequireAuth><Suspense fallback={<Loading />}><EditUserProfile /></Suspense></RequireAuth>} />
         <Route path="/login" element={<Suspense fallback={<Loading />}><Login /></Suspense>} />
         <Route path="/signup" element={<Suspense fallback={<Loading />}><SignUp /></Suspense>} />
-        <Route path="/profile/*" element={<Suspense fallback={<Loading />}><Dashboard /></Suspense>} />
+        <Route path="/profile/*" element={<RequireAuth><Suspense fallback={<Loading />}><Dashboard /></Suspense></RequireAuth>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
