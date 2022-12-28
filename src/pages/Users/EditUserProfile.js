@@ -9,14 +9,14 @@ import TextField from '../../components/TextField';
 
 const EditUserProfile = () => {
     const { email } = useParams();
-    const { data: user } = useQuery('user', () => fetch(`http://localhost:5000/user/${email}`)
+    const { data: user } = useQuery('user', () => fetch(`https://hm-home.onrender.com/user/${email}`)
         .then(res => res.json()));
     const { register, handleSubmit } = useForm();
     const navigate = useNavigate();
 
 
     const onSubmit = async data => {
-        fetch(`http://localhost:5000/user/update-profile/${email}`, {
+        fetch(`https://hm-home.onrender.com/user/update-profile/${email}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'

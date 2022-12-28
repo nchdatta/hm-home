@@ -10,14 +10,14 @@ const Users = () => {
     const [currentUser] = useAuthState(auth);
     const [totalPages] = usePages(size);
     const [page, setPage] = useState(0);
-    const { data: users, refetch } = useQuery('users', () => fetch(`http://localhost:5000/user?page=${page}&size=${size}`)
+    const { data: users, refetch } = useQuery('users', () => fetch(`https://hm-home.onrender.com/user?page=${page}&size=${size}`)
         .then(res => res.json()));
 
     const handleRemove = async (id, name) => {
         const confirm = window.confirm(`Are you sure want to remove "${name}"`);
         if (confirm) {
             try {
-                const res = await fetch(`http://localhost:5000/user/delete/${id}`, {
+                const res = await fetch(`https://hm-home.onrender.com/user/delete/${id}`, {
                     method: 'DELETE'
                 });
                 const data = await res.json();

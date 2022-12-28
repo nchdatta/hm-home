@@ -16,7 +16,7 @@ const UpdateProfile = () => {
     const [user] = useUser();
 
     const onSubmit = async data => {
-        fetch(`http://localhost:5000/user/update-profile/${data.email}`, {
+        fetch(`https://hm-home.onrender.com/user/update-profile/${data.email}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'
