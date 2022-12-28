@@ -47,7 +47,7 @@ const SignUp = () => {
                 <form className='flex flex-col items-center justify-center' onSubmit={handleSubmit(onSubmit)}>
                     <NameField register={register} />
                     <EmailField register={register} />
-                    <PasswordField register={register} />
+                    <PasswordField register={register} label='Password' />
                     <input type='submit' value='Signup' className='text-white bg-[#2CAEE2] hover:bg-[#23a7db] px-10 py-2 rounded text-center cursor-pointer' disabled={creating} />
                 </form>
                 <p className='text-center text-sm mt-4'>Already have an account? <Link to='/login' className='text-[#2CAEE2]'>Login now</Link> </p>

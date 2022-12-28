@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAuthState, useSignOut } from 'react-firebase-hooks/auth';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link } from 'react-router-dom';
 import { dropdownItems, navItems } from '../utils/data';
 import auth from '../utils/firebase.init';
@@ -15,7 +15,6 @@ const lang = <svg className='inline mr-2' width="20" height="20" viewBox="0 0 20
 const Navbar = () => {
     const [isNavExpanded, setIsNavExpanded] = useState(false);
     const [user] = useAuthState(auth);
-    const [signOut] = useSignOut(auth);
 
 
     return (
@@ -37,7 +36,7 @@ const Navbar = () => {
                             <li className='cursor-pointer'>{lang} En {arrowDown}</li>
                             {
                                 user
-                                    ? <button onClick={async () => await signOut()}>Sign out</button>
+                                    ? <li><Link to='/profile'><i className="fa-solid fa-circle-user fa-lg"></i></Link></li>
                                     : <li><Link to='/login' className='border-0 outline-0 text-base font-normal py-2 px-9 text-white bg-[#2CAEE2] hover:bg-[#23a7db] rounded-[39px]'>Login</Link></li>
                             }
                         </ul>

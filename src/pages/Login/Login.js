@@ -5,6 +5,7 @@ import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import auth from '../../utils/firebase.init';
 import EmailField from '../../components/EmailField';
 import PasswordField from '../../components/PasswordField';
+import SubmitButton from '../../components/SubmitButton';
 
 const Login = () => {
     const [signInWithEmailAndPassword, signing] = useSignInWithEmailAndPassword(auth);
@@ -26,8 +27,8 @@ const Login = () => {
 
                 <form className='flex flex-col items-center justify-center' onSubmit={handleSubmit(onSubmit)}>
                     <EmailField register={register} />
-                    <PasswordField register={register} />
-                    <input type='submit' value='Login' className='text-white bg-[#2CAEE2] hover:bg-[#23a7db] px-10 py-2 rounded text-center cursor-pointer' disabled={signing} />
+                    <PasswordField register={register} label='Password' />
+                    <SubmitButton value='Login' loading={signing} />
                 </form>
                 <p className='text-center text-sm mt-4'>Don't have an account? <Link to='/signup' className='text-[#2CAEE2]'>Signup now</Link> </p>
             </div>
