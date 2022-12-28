@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { useQuery } from 'react-query';
+import { useQuery, focusManager } from 'react-query';
 import PrimaryButton from '../../components/PrimaryButton';
 import usePages from '../../hooks/usePages';
 import auth from '../../utils/firebase.init';
 
 const Users = () => {
+    // Override the default focus state
+    focusManager.setFocused(true);
     const size = 3;
     const [currentUser] = useAuthState(auth);
     const [totalPages] = usePages(size);
