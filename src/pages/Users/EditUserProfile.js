@@ -15,17 +15,21 @@ const EditUserProfile = () => {
     const navigate = useNavigate();
 
 
-    const onSubmit = async data => {
-        fetch(`https://hm-home.onrender.com/user/update-profile/${email}`, {
+    const onSubmit = async (data) => {
+        const res = await fetch(`https://hm-home.onrender.com/user/update-profile/${email}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'
             },
             body: JSON.stringify(data)
-        }).then(res => res.json());
+        });
+        const result = await res.json();
+        if (result.success) {
+            navigate('/users', { replace: true });
+        }
 
-        navigate('/users', { replace: true });
     }
+
 
     return (
         <div className='px-4 lg:px-28 min-h-screen w-full flex flex-col items-center my-10'>
@@ -33,7 +37,7 @@ const EditUserProfile = () => {
 
             <form className='flex flex-col items-center justify-center w-full lg:w-1/3' onSubmit={handleSubmit(onSubmit)}>
                 <TextField label='Full Name' id='name' value={user.name} placeholder={user.name} register={register} />
-                <EmailField value={user.email} register={register} />
+                <EmailField value={user.email} register={register} readonly={true} />
                 <TextField label='Phone' id='phone' placeholder={user.phone} register={register} />
                 <TextField label='Address' id='address' placeholder={user.address} register={register} />
                 <SelectField label='Country' id='country' register={register} />

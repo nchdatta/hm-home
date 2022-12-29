@@ -1,9 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDeleteUser } from 'react-firebase-hooks/auth';
+import ConfirmModal from '../../components/ConfirmModal';
 import PrimaryButton from '../../components/PrimaryButton';
 import useUser from '../../hooks/useUser';
+import auth from '../../utils/firebase.init';
 
 const Profile = () => {
     const [user] = useUser();
+    const [deleteUser] = useDeleteUser(auth);
+    const [isModal, setIsModal] = useState(false);
+
+    const handleDelete = async () => {
+        try {
+            const res = await fetch(`https://hm-home.onrender.com/user/delete/${user._id}`, {
+                method: 'DELETE'
+            });
+            const data = await res.json();
+            if (data.success) {
+                await deleteUser();
+                setIsModal(false);
+            }
+        } catch (error) {
+            if (error) {
+                alert("There was a problem while deleting account.");
+            }
+        }
+    }
+
 
     return (
         <div>
@@ -22,7 +45,15 @@ const Profile = () => {
                 {user.country && <p className='mb-1 text-sm text-gray-600'>Country: {user.country}</p>}
 
             </div>
-            <PrimaryButton to='/profile/update-profile' label='Update Profile' />
+            <div className="flex flex-wrap gap-2">
+                <PrimaryButton to='/profile/update-profile' label='Update Profile' />
+                <button onClick={() => setIsModal(true)}
+                    className='border-0 outline-0 text-base font-normal py-2 px-6 text-white bg-red-500 hover:bg-red-400 disabled:bg-red-300 rounded-[39px]'>
+                    Delete Account</button>
+            </div>
+
+            {isModal && <ConfirmModal setIsModal={setIsModal} handleDelete={handleDelete} />}
+
         </div>
     );
 };

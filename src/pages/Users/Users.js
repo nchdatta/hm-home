@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useQuery, focusManager } from 'react-query';
+import ConfirmModal from '../../components/ConfirmModal';
 import PrimaryButton from '../../components/PrimaryButton';
 import usePages from '../../hooks/usePages';
 import auth from '../../utils/firebase.init';
@@ -14,19 +15,24 @@ const Users = () => {
     const [page, setPage] = useState(0);
     const { data: users, refetch } = useQuery('users', () => fetch(`https://hm-home.onrender.com/user?page=${page}&size=${size}`)
         .then(res => res.json()));
+    const [isModal, setIsModal] = useState(false);
+    const [userId, setUserId] = useState('');
 
-    const handleRemove = async (id, name) => {
-        const confirm = window.confirm(`Are you sure want to remove "${name}"`);
-        if (confirm) {
-            try {
-                const res = await fetch(`https://hm-home.onrender.com/user/delete/${id}`, {
-                    method: 'DELETE'
-                });
-                const data = await res.json();
-                if (data.success) {
-                    refetch();
-                }
-            } catch (error) { }
+
+    const handleDelete = async () => {
+        try {
+            const res = await fetch(`https://hm-home.onrender.com/user/delete/${userId}`, {
+                method: 'DELETE'
+            });
+            const data = await res.json();
+            if (data.success) {
+                setIsModal(false);
+                refetch();
+            }
+        } catch (error) {
+            if (error) {
+                alert("There was a problem while deleting account.");
+            }
         }
     }
 
@@ -59,9 +65,12 @@ const Users = () => {
                                 </td>
                                 <td className='flex items-center py-2.5'>
                                     <PrimaryButton to={`/users/edit-user/${user.email}`} label='Edit' />
-                                    <button onClick={() => handleRemove(user._id, user.name)}
+                                    <button onClick={() => {
+                                        setUserId(user._id);
+                                        setIsModal(true);
+                                    }}
                                         disabled={user.email === currentUser?.email}
-                                        className='ml-2 border-0 outline-0 text-base font-normal py-2 px-6 text-white bg-red-500 hover:bg-red-400 disabled:bg-red-300 rounded-[39px]'>Remove</button>
+                                        className='ml-2 border-0 outline-0 text-base font-normal py-2 px-6 text-white bg-red-500 hover:bg-red-400 disabled:bg-red-300 rounded-[39px]'>Delete</button>
                                 </td>
                             </tr>)
                     }
@@ -77,8 +86,9 @@ const Users = () => {
                         </button>)
                 }
             </div>
-        </div>
 
+            {isModal && <ConfirmModal setIsModal={setIsModal} handleDelete={handleDelete} />}
+        </div>
     );
 };
 

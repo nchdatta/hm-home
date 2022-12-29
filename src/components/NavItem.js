@@ -1,10 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink, useMatch } from 'react-router-dom';
 
 const NavItem = ({ to, menu }) => {
+    const match = useMatch({ path: to, end: true });
+
     return (
         <li>
-            <Link to={to} className='block text-sm text-gray-900 hover:text-[#2CAEE2]'>{menu}</Link>
+            <NavLink to={to} className={`block text-sm ${match ? 'text-[#2CAEE2]' : 'text-gray-900'}`}>{menu}</NavLink>
         </li>
     );
 };
