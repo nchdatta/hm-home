@@ -10,10 +10,10 @@ import useUser from '../../hooks/useUser';
 import auth from '../../utils/firebase.init';
 
 const UpdateProfile = () => {
+    const [user] = useUser();
     const { register, handleSubmit } = useForm();
     const [updateProfile, updating] = useUpdateProfile(auth);
     const navigate = useNavigate();
-    const [user] = useUser();
 
     const onSubmit = async data => {
         fetch(`https://hm-home.onrender.com/user/update-profile/${data.email}`, {

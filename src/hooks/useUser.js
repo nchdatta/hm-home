@@ -4,7 +4,7 @@ import auth from "../utils/firebase.init";
 
 const useUser = () => {
     const [currentUser] = useAuthState(auth);
-    const { data: user } = useQuery('user', () => fetch(`https://hm-home.onrender.com/user/${currentUser?.email}`)
+    const { data: user } = useQuery('user', () => fetch(`https://hm-home.onrender.com/user/${currentUser.email}`)
         .then(res => res.json()))
 
     return [user];

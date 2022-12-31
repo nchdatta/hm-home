@@ -38,50 +38,52 @@ const Users = () => {
 
 
     return (
-        <div className="px-4 lg:px-28 overflow-x-auto min-h-screen mt-10">
+        <div className="px-4 lg:px-28 min-h-screen mt-10">
             <h2 className='text-xl text-[#2CAEE2] mb-5'>Users List</h2>
 
-            <table className="overflow-x-scroll w-full text-sm mb-20">
-                <thead className="bg-gray-100">
-                    <tr>
-                        <th className="px-4 text-left py-3 font-medium text-gray-900">Sl.</th>
-                        <th className="px-4 text-left py-3 font-medium text-gray-900">Name</th>
-                        <th className="px-4 text-left py-3 font-medium text-gray-900">Email Address</th>
-                        <th className="px-4 text-left py-3 font-medium text-gray-900">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        users.map((user, index) =>
-                            <tr key={user._id} className='border-b'>
-                                <td className="whitespace-nowrap px-4 py-2.5 text-gray-600">
-                                    {index + 1}
-                                </td>
-                                <td className="whitespace-nowrap px-4 py-2.5 text-gray-600">
-                                    {user.name}
-                                </td>
-                                <td className="whitespace-nowrap px-4 py-2.5 text-gray-600">
-                                    {user.email}
-                                </td>
-                                <td className='flex items-center py-2.5'>
-                                    <PrimaryButton to={`/users/edit-user/${user.email}`} label='Edit' />
-                                    <button onClick={() => {
-                                        setUserId(user._id);
-                                        setIsModal(true);
-                                    }}
-                                        disabled={user.email === currentUser?.email}
-                                        className='ml-2 border-0 outline-0 text-base font-normal py-2 px-6 text-white bg-red-500 hover:bg-red-400 disabled:bg-red-300 rounded-[39px]'>Delete</button>
-                                </td>
-                            </tr>)
-                    }
-                </tbody>
-            </table>
+            <div className='w-full overflow-x-auto mb-20'>
+                <table className="w-full text-sm mb-3">
+                    <thead className="bg-gray-100">
+                        <tr>
+                            <th className="px-4 text-left py-3 font-medium text-gray-900">Sl.</th>
+                            <th className="px-4 text-left py-3 font-medium text-gray-900">Name</th>
+                            <th className="px-4 text-left py-3 font-medium text-gray-900">Email Address</th>
+                            <th className="px-4 text-left py-3 font-medium text-gray-900">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            users.map((user, index) =>
+                                <tr key={user._id} className='border-b'>
+                                    <td className="whitespace-nowrap px-4 py-2.5 text-gray-600">
+                                        {index + 1}
+                                    </td>
+                                    <td className="whitespace-nowrap px-4 py-2.5 text-gray-600">
+                                        {user.name}
+                                    </td>
+                                    <td className="whitespace-nowrap px-4 py-2.5 text-gray-600">
+                                        {user.email}
+                                    </td>
+                                    <td className='flex items-center py-2.5'>
+                                        <PrimaryButton to={`/users/edit-user/${user.email}`} label='Edit' />
+                                        <button onClick={() => {
+                                            setUserId(user._id);
+                                            setIsModal(true);
+                                        }}
+                                            disabled={user.email === currentUser?.email}
+                                            className='ml-2 border-0 outline-0 text-base font-normal py-2 px-6 text-white bg-red-500 hover:bg-red-400 disabled:bg-red-300 rounded-[39px]'>Delete</button>
+                                    </td>
+                                </tr>)
+                        }
+                    </tbody>
+                </table>
+            </div>
 
             <div className="text-center">
                 {
                     [...Array(totalPages).keys()].map(number =>
                         <button key={number} onClick={() => setPage(number)}
-                            className='px-3.5 py-1 bg-[#2CAEE2] hover:bg-[#25ace1] text-white rounded-sm outline-0 mr-2'>
+                            className={`px-3.5 py-1 ${number === page ? 'bg-[#25ace1] text-white' : 'bg-gray-100'} rounded-sm outline-0 mr-2`}>
                             {number + 1}
                         </button>)
                 }

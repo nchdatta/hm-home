@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useQuery } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import EmailField from '../../components/EmailField';
 import SelectField from '../../components/SelectField';
@@ -9,10 +8,16 @@ import TextField from '../../components/TextField';
 
 const EditUserProfile = () => {
     const { email } = useParams();
-    const { data: user } = useQuery('user', () => fetch(`https://hm-home.onrender.com/user/${email}`)
-        .then(res => res.json()));
+    console.log(email)
+    const [user, setUser] = useState({});
     const { register, handleSubmit } = useForm();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        fetch(`https://hm-home.onrender.com/user/${email}`)
+            .then(res => res.json())
+            .then(data => setUser(data));
+    }, [email]);
 
 
     const onSubmit = async (data) => {
@@ -37,7 +42,7 @@ const EditUserProfile = () => {
 
             <form className='flex flex-col items-center justify-center w-full lg:w-1/3' onSubmit={handleSubmit(onSubmit)}>
                 <TextField label='Full Name' id='name' value={user.name} placeholder={user.name} register={register} />
-                <EmailField value={user.email} register={register} readonly={true} />
+                <EmailField value={user?.email} register={register} readonly={true} />
                 <TextField label='Phone' id='phone' placeholder={user.phone} register={register} />
                 <TextField label='Address' id='address' placeholder={user.address} register={register} />
                 <SelectField label='Country' id='country' register={register} />
