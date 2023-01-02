@@ -1,30 +1,25 @@
 import React, { useState } from 'react';
-import { useDeleteUser } from 'react-firebase-hooks/auth';
+import { useAuthState, useDeleteUser as useDeleteFromFirebase } from 'react-firebase-hooks/auth';
 import ConfirmModal from '../../components/ConfirmModal';
 import PrimaryButton from '../../components/PrimaryButton';
 import useUser from '../../hooks/useUser';
+import useDeleteUser from '../../hooks/useDeleteUser';
 import auth from '../../utils/firebase.init';
 
 const Profile = () => {
-    const [user] = useUser();
-    const [deleteUser] = useDeleteUser(auth);
+    const [currentUser] = useAuthState(auth);
+    const { data: user } = useUser(currentUser.email);
+    const [deleteUser] = useDeleteFromFirebase();
+    const { mutate } = useDeleteUser();
     const [isModal, setIsModal] = useState(false);
 
-    const handleDelete = async () => {
-        try {
-            const res = await fetch(`https://hm-home.onrender.com/user/delete/${user._id}`, {
-                method: 'DELETE'
-            });
-            const data = await res.json();
-            if (data.success) {
+    const handleDelete = () => {
+        mutate(user._id, {
+            onSuccess: async () => {
                 await deleteUser();
                 setIsModal(false);
             }
-        } catch (error) {
-            if (error) {
-                alert("There was a problem while deleting account.");
-            }
-        }
+        })
     }
 
 

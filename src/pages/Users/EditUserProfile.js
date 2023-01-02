@@ -1,38 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import EmailField from '../../components/EmailField';
 import SelectField from '../../components/SelectField';
 import SubmitButton from '../../components/SubmitButton';
 import TextField from '../../components/TextField';
+import useUpdateUser from '../../hooks/useUpdateUser';
+import useUser from '../../hooks/useUser';
 
 const EditUserProfile = () => {
     const { email } = useParams();
-    console.log(email)
-    const [user, setUser] = useState({});
+    const { data: user } = useUser(email);
+    const { mutate } = useUpdateUser(email);
     const { register, handleSubmit } = useForm();
     const navigate = useNavigate();
 
-    useEffect(() => {
-        fetch(`https://hm-home.onrender.com/user/${email}`)
-            .then(res => res.json())
-            .then(data => setUser(data));
-    }, [email]);
-
 
     const onSubmit = async (data) => {
-        const res = await fetch(`https://hm-home.onrender.com/user/update-profile/${email}`, {
-            method: 'PUT',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
-        const result = await res.json();
-        if (result.success) {
-            navigate('/users', { replace: true });
-        }
-
+        mutate(data, {
+            onSuccess: () => {
+                navigate('/users', { replace: true });
+            }
+        })
     }
 
 
@@ -41,10 +30,10 @@ const EditUserProfile = () => {
             <h2 className='text-md font-medium text-blue-500 mb-5'>Update Profile</h2>
 
             <form className='flex flex-col items-center justify-center w-full lg:w-1/3' onSubmit={handleSubmit(onSubmit)}>
-                <TextField label='Full Name' id='name' value={user.name} placeholder={user.name} register={register} />
-                <EmailField value={user?.email} register={register} readonly={true} />
-                <TextField label='Phone' id='phone' placeholder={user.phone} register={register} />
-                <TextField label='Address' id='address' placeholder={user.address} register={register} />
+                <TextField label='Full Name' id='name' value={user.name} register={register} />
+                <EmailField value={user.email} register={register} readonly={true} />
+                <TextField label='Phone' id='phone' value={user.phone} register={register} />
+                <TextField label='Address' id='address' value={user.address} register={register} />
                 <SelectField label='Country' id='country' register={register} />
                 <SubmitButton value='Update' />
             </form>

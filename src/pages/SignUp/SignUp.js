@@ -7,11 +7,24 @@ import TextField from '../../components/TextField';
 import EmailField from '../../components/EmailField';
 import PasswordField from '../../components/PasswordField';
 import SubmitButton from '../../components/SubmitButton';
+import { useMutation, useQueryClient } from 'react-query';
+import { createUser } from '../../apis/userAPI';
 
 const SignUp = () => {
     const { register, handleSubmit } = useForm();
-    const [createUserWithEmailAndPassword, user, creating, cError] = useCreateUserWithEmailAndPassword(auth);
+    const [createUserWithEmailAndPassword, user, creating, cError] = useCreateUserWithEmailAndPassword(auth, {
+        sendEmailVerification: true,
+        emailVerificationOptions: {
+            url: '/'
+        }
+    });
     const [updateProfile] = useUpdateProfile(auth);
+    const qClient = useQueryClient();
+    const { mutateAsync } = useMutation(data => createUser(data), {
+        onSuccess: () => {
+            qClient.invalidateQueries('user');
+        }
+    })
     const navigate = useNavigate();
 
     const onSubmit = async data => {
@@ -19,15 +32,8 @@ const SignUp = () => {
 
         await createUserWithEmailAndPassword(email, password);
         await updateProfile({ displayName: name });
-
         // Insert a user 
-        fetch('https://hm-home.onrender.com/user', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify({ name, email })
-        }).then(res => res.json());
+        await mutateAsync({ name, email, password })
     }
 
     if (user) {

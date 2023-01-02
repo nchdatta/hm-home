@@ -1,41 +1,32 @@
 import React, { useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { useQuery, focusManager } from 'react-query';
+import { useQuery } from 'react-query';
+import { deleteUser, getUsers } from '../../apis/userAPI';
 import ConfirmModal from '../../components/ConfirmModal';
 import PrimaryButton from '../../components/PrimaryButton';
+import useDeleteUser from '../../hooks/useDeleteUser';
 import usePages from '../../hooks/usePages';
 import auth from '../../utils/firebase.init';
 
 const Users = () => {
-    // Override the default focus state
-    focusManager.setFocused(true);
     const size = 3;
     const [currentUser] = useAuthState(auth);
     const [totalPages] = usePages(size);
     const [page, setPage] = useState(0);
-    const { data: users, refetch } = useQuery('users', () => fetch(`https://hm-home.onrender.com/user?page=${page}&size=${size}`)
-        .then(res => res.json()));
+    const { data: users } = useQuery(['users', page], () => getUsers(page, size), {
+        keepPreviousData: true
+    });
     const [isModal, setIsModal] = useState(false);
     const [userId, setUserId] = useState('');
-
+    const { mutate } = useDeleteUser(() => deleteUser(userId));
 
     const handleDelete = async () => {
-        try {
-            const res = await fetch(`https://hm-home.onrender.com/user/delete/${userId}`, {
-                method: 'DELETE'
-            });
-            const data = await res.json();
-            if (data.success) {
-                setIsModal(false);
-                refetch();
+        mutate(userId, {
+            onSuccess: () => {
+                setIsModal(false)
             }
-        } catch (error) {
-            if (error) {
-                alert("There was a problem while deleting account.");
-            }
-        }
+        });
     }
-
 
     return (
         <div className="px-4 lg:px-28 min-h-screen mt-10">

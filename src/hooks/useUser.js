@@ -1,14 +1,8 @@
-import { useAuthState } from "react-firebase-hooks/auth";
 import { useQuery } from "react-query";
-import auth from "../utils/firebase.init";
+import { getUser } from "../apis/userAPI";
 
-const useUser = () => {
-    const [currentUser] = useAuthState(auth);
-    const { data: user } = useQuery('user', () => fetch(`https://hm-home.onrender.com/user/${currentUser.email}`)
-        .then(res => res.json()))
-
-    return [user];
-
+const useUser = (email) => {
+    return useQuery(['user', email], () => getUser(email));
 };
 
 export default useUser;
