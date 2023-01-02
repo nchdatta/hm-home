@@ -5,6 +5,7 @@ import EmailField from '../../components/EmailField';
 import SelectField from '../../components/SelectField';
 import SubmitButton from '../../components/SubmitButton';
 import TextField from '../../components/TextField';
+import useCountries from '../../hooks/useCountries';
 import useUpdateUser from '../../hooks/useUpdateUser';
 import useUser from '../../hooks/useUser';
 
@@ -12,6 +13,7 @@ const EditUserProfile = () => {
     const { email } = useParams();
     const { data: user } = useUser(email);
     const { mutate } = useUpdateUser(email);
+    const { data: countries } = useCountries();
     const { register, handleSubmit } = useForm();
     const navigate = useNavigate();
 
@@ -34,7 +36,7 @@ const EditUserProfile = () => {
                 <EmailField value={user.email} register={register} readonly={true} />
                 <TextField label='Phone' id='phone' value={user.phone} register={register} />
                 <TextField label='Address' id='address' value={user.address} register={register} />
-                <SelectField label='Country' id='country' register={register} />
+                <SelectField label='Country' id='country' register={register} countries={countries} />
                 <SubmitButton value='Update' />
             </form>
         </div>

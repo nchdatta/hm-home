@@ -2,7 +2,7 @@ import api from "./api"
 
 const getUsers = async (page, limit) => {
     try {
-        const response = await api.get(`/user?page=${page}&size=${limit}`);
+        const response = await api.get(`/user?page=${page}&limit=${limit}`);
         return response.data;
     } catch (error) { }
 }

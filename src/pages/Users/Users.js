@@ -1,24 +1,22 @@
 import React, { useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useQuery } from 'react-query';
-import { deleteUser, getUsers } from '../../apis/userAPI';
+import { getUsers } from '../../apis/userAPI';
 import ConfirmModal from '../../components/ConfirmModal';
 import PrimaryButton from '../../components/PrimaryButton';
 import useDeleteUser from '../../hooks/useDeleteUser';
-import usePages from '../../hooks/usePages';
 import auth from '../../utils/firebase.init';
 
 const Users = () => {
-    const size = 3;
     const [currentUser] = useAuthState(auth);
-    const [totalPages] = usePages(size);
-    const [page, setPage] = useState(0);
-    const { data: users } = useQuery(['users', page], () => getUsers(page, size), {
+    const [limit, setLimit] = useState(3);
+    const [page, setPage] = useState(1);
+    const { data: users } = useQuery(['users', page], () => getUsers(page, limit), {
         keepPreviousData: true
     });
     const [isModal, setIsModal] = useState(false);
     const [userId, setUserId] = useState('');
-    const { mutate } = useDeleteUser(() => deleteUser(userId));
+    const { mutate } = useDeleteUser(page, userId);
 
     const handleDelete = async () => {
         mutate(userId, {
@@ -27,6 +25,8 @@ const Users = () => {
             }
         });
     }
+    const handlePrev = prev => setPage(page - 1);
+    const handleNext = prev => setPage(page + 1);
 
     return (
         <div className="px-4 lg:px-28 min-h-screen mt-10">
@@ -44,7 +44,7 @@ const Users = () => {
                     </thead>
                     <tbody>
                         {
-                            users.map((user, index) =>
+                            users.data.map((user, index) =>
                                 <tr key={user._id} className='border-b'>
                                     <td className="whitespace-nowrap px-4 py-2.5 text-gray-600">
                                         {index + 1}
@@ -70,14 +70,16 @@ const Users = () => {
                 </table>
             </div>
 
-            <div className="text-center">
+            <div className="flex flex-wrap justify-center gap-2">
+                <button onClick={() => handlePrev(page)} className="px-3.5 py-1 rounded-sm outline-0 bg-gray-100 disabled:bg-gray-50 disabled:text-gray-400" disabled={page === 1}>Prev</button>
                 {
-                    [...Array(totalPages).keys()].map(number =>
-                        <button key={number} onClick={() => setPage(number)}
-                            className={`px-3.5 py-1 ${number === page ? 'bg-[#25ace1] text-white' : 'bg-gray-100'} rounded-sm outline-0 mr-2`}>
+                    [...Array(users.meta.totalPages).keys()].map(number =>
+                        <button key={number} onClick={() => setPage(number + 1)}
+                            className={`px-3.5 py-1 ${(number + 1) === page ? 'bg-[#25ace1] text-white' : 'bg-gray-100'} rounded-sm outline-0`}>
                             {number + 1}
                         </button>)
                 }
+                <button onClick={() => handleNext(page)} className="px-3.5 py-1 rounded-sm outline-0 bg-gray-100 disabled:bg-gray-50 disabled:text-gray-400" disabled={page === users.meta.totalPages}>Next</button>
             </div>
 
             {isModal && <ConfirmModal setIsModal={setIsModal} handleDelete={handleDelete} />}

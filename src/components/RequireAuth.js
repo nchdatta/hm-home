@@ -17,7 +17,7 @@ const RequireAuth = ({ children }) => {
     if (!user.emailVerified) {
         return (
             <div className='min-h-[70vh] lg:w-1/2 mx-auto flex flex-col justify-start items-center mt-12'>
-                <h3 class="text-2xl mb-3">Thanks for signing up for Hm Home!</h3>
+                <h3 className="text-2xl mb-3">Thanks for signing up for Hm Home!</h3>
                 <p>We're happy you're here. Let's get your email address verified.</p>
                 <p className='my-2'>Please check your email inbox/spam.</p>
                 <p className='mt-2 text-green-600'>Email address registered: <code>{user.email}</code></p>

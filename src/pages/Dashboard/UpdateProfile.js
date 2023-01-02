@@ -6,6 +6,7 @@ import EmailField from '../../components/EmailField';
 import SelectField from '../../components/SelectField';
 import SubmitButton from '../../components/SubmitButton';
 import TextField from '../../components/TextField';
+import useCountries from '../../hooks/useCountries';
 import useUpdateUser from '../../hooks/useUpdateUser';
 import useUser from '../../hooks/useUser';
 import auth from '../../utils/firebase.init';
@@ -15,6 +16,7 @@ const UpdateProfile = () => {
     const { data: user } = useUser(currentUser.email);
     const [updateProfile, updating] = useUpdateProfile(auth);
     const { mutate } = useUpdateUser(currentUser.email);
+    const { data: countries } = useCountries()
     const { register, handleSubmit } = useForm();
     const navigate = useNavigate();
 
@@ -36,7 +38,7 @@ const UpdateProfile = () => {
                 <EmailField value={user.email} register={register} readonly={true} />
                 <TextField label='Phone' id='phone' value={user.phone} register={register} />
                 <TextField label='Address' id='address' value={user.address} register={register} />
-                <SelectField label='Country' id='country' register={register} />
+                <SelectField label='Country' id='country' register={register} countries={countries} />
                 <SubmitButton value='Update' loading={updating} />
             </form>
         </div>

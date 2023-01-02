@@ -9,7 +9,7 @@ import auth from '../../utils/firebase.init';
 const Profile = () => {
     const [currentUser] = useAuthState(auth);
     const { data: user } = useUser(currentUser.email);
-    const [deleteUser] = useDeleteFromFirebase();
+    const [deleteUser] = useDeleteFromFirebase(auth);
     const { mutate } = useDeleteUser();
     const [isModal, setIsModal] = useState(false);
 

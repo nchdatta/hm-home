@@ -1,11 +1,11 @@
 import { useMutation, useQueryClient } from "react-query";
 import { deleteUser } from "../apis/userAPI";
 
-const useDeleteUser = () => {
+const useDeleteUser = (page, userId) => {
     const queryClient = useQueryClient();
-    return useMutation(deleteUser, {
+    return useMutation(() => deleteUser(userId), {
         onSuccess: () => {
-            queryClient.invalidateQueries('users');
+            queryClient.invalidateQueries(['users', page]);
         }
     });
 };

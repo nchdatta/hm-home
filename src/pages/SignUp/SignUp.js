@@ -15,7 +15,7 @@ const SignUp = () => {
     const [createUserWithEmailAndPassword, user, creating, cError] = useCreateUserWithEmailAndPassword(auth, {
         sendEmailVerification: true,
         emailVerificationOptions: {
-            url: '/'
+            url: "https://hmhome.netlify.app"
         }
     });
     const [updateProfile] = useUpdateProfile(auth);
@@ -30,13 +30,10 @@ const SignUp = () => {
     const onSubmit = async data => {
         const { name, email, password } = data;
 
+        // Insert a user 
+        await mutateAsync({ name, email, password });
         await createUserWithEmailAndPassword(email, password);
         await updateProfile({ displayName: name });
-        // Insert a user 
-        await mutateAsync({ name, email, password })
-    }
-
-    if (user) {
         navigate('/', { replace: true });
     }
 
